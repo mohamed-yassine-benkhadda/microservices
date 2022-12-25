@@ -33,7 +33,6 @@ public class GestionChauffeur {
     }
     @GetMapping("/liste")
     public List<Chauffeur> allChaufeur(){
-//        System.out.println(chauffeurRespository.findAll().get(0).getNom());
         List<Chauffeur> listeChauffeur;
         listeChauffeur = chauffeurRespository.findAll();
         for (Chauffeur c:listeChauffeur) {
