@@ -1,12 +1,27 @@
 package com.projet.microservices.chauffeur;
 
+import jakarta.persistence.*;
+
+@Entity
+@Table(name = "chauffeur")
 public class Chauffeur {
-    private int idChauffeur;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int id_chauffeur;
     private String CIN;
     private String nom;
     private String prenom;
-    private String dateNaissance;
+    private String date_de_naissance;
     private String adresse;
+    private String permis;
+
+    public String getPermis() {
+        return permis;
+    }
+
+    public void setPermis(String permis) {
+        this.permis = permis;
+    }
 
     public String getCIN() {
         return CIN;
@@ -17,11 +32,11 @@ public class Chauffeur {
     }
 
     public int getIdChauffeur() {
-        return idChauffeur;
+        return id_chauffeur;
     }
 
-    public void setIdChauffeur(int idChauffeur) {
-        this.idChauffeur = idChauffeur;
+    public void setIdChauffeur(int id_chauffeur) {
+        this.id_chauffeur = id_chauffeur;
     }
 
     public String getNom() {
@@ -41,11 +56,11 @@ public class Chauffeur {
     }
 
     public String getDateNaissance() {
-        return dateNaissance;
+        return date_de_naissance;
     }
 
-    public void setDateNaissance(String dateNaissance) {
-        this.dateNaissance = dateNaissance;
+    public void setDateNaissance(String date_de_naissance) {
+        this.date_de_naissance = date_de_naissance;
     }
 
     public String getAdresse() {
@@ -56,15 +71,28 @@ public class Chauffeur {
         this.adresse = adresse;
     }
 
-    public Chauffeur(int idChauffeur, String CIN, String nom, String prenom, String dateNaissance, String adresse) {
-        this.idChauffeur = idChauffeur;
+    public Chauffeur(String CIN, String nom, String prenom, String date_de_naissance, String adresse, String permis) {
         this.CIN = CIN;
         this.nom = nom;
         this.prenom = prenom;
-        this.dateNaissance = dateNaissance;
+        this.date_de_naissance = date_de_naissance;
         this.adresse = adresse;
+        this.permis = permis;
     }
 
     public Chauffeur() {
+    }
+
+    @Override
+    public String toString() {
+        return "Chauffeur{" +
+                "id_chauffeur=" + id_chauffeur +
+                ", CIN='" + CIN + '\'' +
+                ", nom='" + nom + '\'' +
+                ", prenom='" + prenom + '\'' +
+                ", date_de_naissance='" + date_de_naissance + '\'' +
+                ", adresse='" + adresse + '\'' +
+                ", permis='" + permis + '\'' +
+                '}';
     }
 }
