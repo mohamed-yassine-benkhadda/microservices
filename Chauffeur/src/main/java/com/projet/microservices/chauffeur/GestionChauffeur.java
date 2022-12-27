@@ -31,7 +31,7 @@ public class GestionChauffeur {
             System.out.println("cannot delete");
         }
     }
-    @GetMapping("/liste")
+    @GetMapping("")
     public List<Chauffeur> allChaufeur(){
         List<Chauffeur> listeChauffeur;
         listeChauffeur = chauffeurRespository.findAll();
