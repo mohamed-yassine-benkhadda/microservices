@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/vehicule")
@@ -33,5 +34,11 @@ public class GestionVehicule {
             System.out.println(v);
         }
         return listeVehicule;
+    }
+
+    @GetMapping("page")
+    public Optional<Vehicule> getAdmin(@RequestParam("id") int id){
+        Optional<Vehicule> m = vehiculeRespository.findById(id);
+        return m;
     }
 }

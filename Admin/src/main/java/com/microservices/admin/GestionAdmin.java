@@ -15,6 +15,7 @@ import org.springframework.cloud.client.discovery.DiscoveryClient;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/admin")
@@ -44,6 +45,12 @@ public class GestionAdmin {
             System.out.println(c);
         }
         return listeAdmin;
+    }
+
+    @GetMapping("page")
+    public Optional<Admin> getAdmin(@RequestParam("id") int id){
+        Optional<Admin> a = adminRespository.findById(id);
+        return a;
     }
 
     @GetMapping("test")

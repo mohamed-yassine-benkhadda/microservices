@@ -3,6 +3,7 @@ package com.projet.microservices.chauffeur;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
+import java.util.Optional;
 
 
 @RestController
@@ -39,5 +40,11 @@ public class GestionChauffeur {
             System.out.println(c);
         }
         return listeChauffeur;
+    }
+
+    @GetMapping("page")
+    public Optional<Chauffeur> getAdmin(@RequestParam("id") int id){
+        Optional<Chauffeur> c = chauffeurRespository.findById(id);
+        return c;
     }
 }
