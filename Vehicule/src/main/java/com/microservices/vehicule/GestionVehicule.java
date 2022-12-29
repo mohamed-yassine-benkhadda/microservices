@@ -15,8 +15,8 @@ public class GestionVehicule {
     @Autowired
     VehiculeRespository vehiculeRespository;
     @GetMapping("ajouter")
-    public Vehicule addVehicule(@RequestParam("immatricule") String immatricule, @RequestParam("marque") String marque, @RequestParam("model") String model, @RequestParam("categorie") String categorie, @RequestParam("permis") String permis){
-        Vehicule v= new Vehicule(immatricule,marque,model,categorie,permis);
+    public Vehicule addVehicule(@RequestParam("id_locataire") int id_locataire, @RequestParam("immatricule") String immatricule, @RequestParam("marque") String marque, @RequestParam("model") String model, @RequestParam("categorie") String categorie, @RequestParam("permis") String permis){
+        Vehicule v= new Vehicule(id_locataire,immatricule,marque,model,categorie,permis);
         vehiculeRespository.save(v);
         return v;
     }

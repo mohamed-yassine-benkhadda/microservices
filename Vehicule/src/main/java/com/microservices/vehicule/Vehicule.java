@@ -8,11 +8,20 @@ public class Vehicule {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id_vehicule;
+    private int id_locataire;
     private String immatricule;
     private String marque;
     private String model;
     private String categorie;
     private String permis;
+
+    public int getId_locataire() {
+        return id_locataire;
+    }
+
+    public void setId_locataire(int id_locataire) {
+        this.id_locataire = id_locataire;
+    }
 
     public int getId_vehicule() {
         return id_vehicule;
@@ -62,7 +71,8 @@ public class Vehicule {
         this.permis = permis;
     }
 
-    public Vehicule(String immatricule, String marque, String model, String categorie, String permis) {
+    public Vehicule(int id_locataire,String immatricule, String marque, String model, String categorie, String permis) {
+        this.id_locataire = id_locataire;
         this.immatricule = immatricule;
         this.marque = marque;
         this.model = model;

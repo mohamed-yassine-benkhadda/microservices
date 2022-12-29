@@ -69,30 +69,37 @@ public class GestionMission {
         }
         System.out.println(listeMission);
         return liste;
-//        List<InstanceInfo> apps = discoveryClient.getApplication("VEHICULE").getInstances();
-//        String url = "http://"+apps.get(0).getHostName()+":"+apps.get(0).getPort()+"/"+apps.get(0).getAppName().toLowerCase()+"/page?id="+id;
-//        HttpHeaders headers = new HttpHeaders();
-//        headers.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
-//        HttpEntity<String> entity = new HttpEntity<String>(headers);
-//        ResponseEntity<String> result = restTemplate.exchange(url, HttpMethod.GET, entity, String.class);
-//        return listeMission;
     }
 
     @GetMapping("page")
-    public Optional<Mission> getAdmin(@RequestParam("id") int id){
-        Optional<Mission> m = missionRespository.findById(id);
-        return m;
+    public ListeMission getMission(@RequestParam("id") int id){
+        RestTemplate restTemplate = new RestTemplate();
+        HttpHeaders headers = new HttpHeaders();
+        headers.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
+        HttpEntity<String> entity = new HttpEntity<String>(headers);
+        ListeMission mission = new ListeMission();
+        missionRespository.findById(id).ifPresent(m -> {
+            List<InstanceInfo> apps = discoveryClient.getApplication("VEHICULE").getInstances();
+            System.out.println(m.getClass());
+            String url_vehicule = "http://"+apps.get(0).getHostName()+":"+apps.get(0).getPort()+"/"+apps.get(0).getAppName().toLowerCase()+"/page?id="+m.getId_vehicule();
+            apps = discoveryClient.getApplication("CHAUFFEUR").getInstances();
+            String url_chauffeur = "http://"+apps.get(0).getHostName()+":"+apps.get(0).getPort()+"/"+apps.get(0).getAppName().toLowerCase()+"/page?id="+m.getId_chauffeur();
+            System.out.println(url_chauffeur + "\n" + url_vehicule);
+            ResponseEntity<Chauffeur> result_chauffeur = restTemplate.exchange(url_chauffeur, HttpMethod.GET, entity, Chauffeur.class);
+            ResponseEntity<Vehicule> result_vehicule = restTemplate.exchange(url_vehicule, HttpMethod.GET, entity, Vehicule.class);
+            mission.setId_mission(m.getId_mission());
+            mission.setAdresse(m.getAdresse());
+            mission.setCategorie(result_vehicule.getBody().getCategorie());
+            mission.setCin(result_chauffeur.getBody().getCIN());
+            mission.setImmatricule(result_vehicule.getBody().getImmatricule());
+            mission.setMarque(result_vehicule.getBody().getMarque());
+            mission.setModel(result_vehicule.getBody().getModel());
+            mission.setPermis(result_vehicule.getBody().getPermis());
+            mission.setTitre(m.getTitre());
+            mission.setDateNaissance(result_chauffeur.getBody().getDateNaissance());
+            mission.setNomChauffeur(result_chauffeur.getBody().getNom() + " "+ result_chauffeur.getBody().getPrenom());
+            mission.setDescription(m.getDescription());
+        });
+        return mission;
     }
-
-//    @GetMapping("In")
-//    public ResponseEntity<String> testVehicule(){
-//        RestTemplate restTemplate = new RestTemplate();
-//        List<InstanceInfo> apps = discoveryClient.getApplication("VEHICULE").getInstances();
-//        String url = "http://"+apps.get(0).getHostName()+":"+apps.get(0).getPort()+"/"+apps.get(0).getAppName().toLowerCase();
-//        HttpHeaders headers = new HttpHeaders();
-//        headers.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
-//        HttpEntity<String> entity = new HttpEntity<String>(headers);
-//        ResponseEntity<String> result = restTemplate.exchange(url, HttpMethod.GET, entity, String.class);
-//        return result;
-//    }
 }
