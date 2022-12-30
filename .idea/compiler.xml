@@ -6,8 +6,9 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="Eureka_server" />
         <module name="Vehicule" />
+        <module name="Recherche_microservices" />
+        <module name="Eureka_server" />
         <module name="Mission" />
         <module name="Admin" />
         <module name="Locataire" />
@@ -15,12 +16,7 @@
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
-      <module name="Admin" target="17" />
-      <module name="Chauffeur" target="17" />
-      <module name="Eureka_server" target="17" />
-      <module name="Locataire" target="17" />
-      <module name="Mission" target="17" />
-      <module name="Vehicule" target="17" />
+      <module name="Recherche" target="17" />
     </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">
@@ -30,6 +26,7 @@
       <module name="Eureka_server" options="-parameters" />
       <module name="Locataire" options="-parameters" />
       <module name="Mission" options="-parameters" />
+      <module name="Recherche_microservices" options="-parameters" />
       <module name="Vehicule" options="-parameters" />
     </option>
   </component>

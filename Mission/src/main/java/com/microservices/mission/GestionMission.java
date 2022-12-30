@@ -50,11 +50,11 @@ public class GestionMission {
             String url_vehicule = "http://"+apps.get(0).getHostName()+":"+apps.get(0).getPort()+"/"+apps.get(0).getAppName().toLowerCase()+"/page?id="+m.getId_vehicule();
             apps = discoveryClient.getApplication("CHAUFFEUR").getInstances();
             String url_chauffeur = "http://"+apps.get(0).getHostName()+":"+apps.get(0).getPort()+"/"+apps.get(0).getAppName().toLowerCase()+"/page?id="+m.getId_chauffeur();
-            System.out.println(url_chauffeur + "\n" + url_vehicule);
             ResponseEntity<Chauffeur> result_chauffeur = restTemplate.exchange(url_chauffeur, HttpMethod.GET, entity, Chauffeur.class);
-            ResponseEntity<Vehicule> result_vehicule = restTemplate.exchange(url_vehicule, HttpMethod.GET, entity, Vehicule.class);
+            ResponseEntity<ListeVehicule> result_vehicule = restTemplate.exchange(url_vehicule, HttpMethod.GET, entity, ListeVehicule.class);
             mission.setId_mission(m.getId_mission());
             mission.setAdresse(m.getAdresse());
+            mission.setLocataire(result_vehicule.getBody().getLocataire());
             mission.setCategorie(result_vehicule.getBody().getCategorie());
             mission.setCin(result_chauffeur.getBody().getCIN());
             mission.setImmatricule(result_vehicule.getBody().getImmatricule());
@@ -67,7 +67,6 @@ public class GestionMission {
             mission.setDescription(m.getDescription());
             liste.add(mission);
         }
-        System.out.println(listeMission);
         return liste;
     }
 
@@ -84,10 +83,10 @@ public class GestionMission {
             String url_vehicule = "http://"+apps.get(0).getHostName()+":"+apps.get(0).getPort()+"/"+apps.get(0).getAppName().toLowerCase()+"/page?id="+m.getId_vehicule();
             apps = discoveryClient.getApplication("CHAUFFEUR").getInstances();
             String url_chauffeur = "http://"+apps.get(0).getHostName()+":"+apps.get(0).getPort()+"/"+apps.get(0).getAppName().toLowerCase()+"/page?id="+m.getId_chauffeur();
-            System.out.println(url_chauffeur + "\n" + url_vehicule);
             ResponseEntity<Chauffeur> result_chauffeur = restTemplate.exchange(url_chauffeur, HttpMethod.GET, entity, Chauffeur.class);
-            ResponseEntity<Vehicule> result_vehicule = restTemplate.exchange(url_vehicule, HttpMethod.GET, entity, Vehicule.class);
+            ResponseEntity<ListeVehicule> result_vehicule = restTemplate.exchange(url_vehicule, HttpMethod.GET, entity, ListeVehicule.class);
             mission.setId_mission(m.getId_mission());
+            mission.setLocataire(result_vehicule.getBody().getLocataire());
             mission.setAdresse(m.getAdresse());
             mission.setCategorie(result_vehicule.getBody().getCategorie());
             mission.setCin(result_chauffeur.getBody().getCIN());

@@ -13,6 +13,15 @@ public class ListeMission {
     private String categorie;
     private String immatricule;
     private String description;
+    private String locataire;
+
+    public String getLocataire() {
+        return locataire;
+    }
+
+    public void setLocataire(String locataire) {
+        this.locataire = locataire;
+    }
 
     public String getDescription() {
         return description;
@@ -110,7 +119,7 @@ public class ListeMission {
         this.immatricule = immatricule;
     }
 
-    public ListeMission(int id_mission, String titre, String adresse, String nomChauffeur, String cin, String dateNaissance, String permis, String marque, String model, String categorie, String immatricule, String description) {
+    public ListeMission(int id_mission, String titre, String adresse, String nomChauffeur, String cin, String dateNaissance, String permis, String marque, String model, String categorie, String immatricule, String description, String locataire) {
         this.id_mission = id_mission;
         this.titre = titre;
         this.adresse = adresse;
@@ -123,6 +132,7 @@ public class ListeMission {
         this.categorie = categorie;
         this.immatricule = immatricule;
         this.description = description;
+        this.locataire = locataire;
     }
 
     public ListeMission() {
@@ -143,6 +153,7 @@ public class ListeMission {
                 ", categorie='" + categorie + '\'' +
                 ", immatricule='" + immatricule + '\'' +
                 ", description='" + description + '\'' +
+                ", locataire='" + locataire + '\'' +
                 '}';
     }
 }

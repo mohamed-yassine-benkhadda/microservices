@@ -2,12 +2,6 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/Admin/Admin.iml" filepath="$PROJECT_DIR$/Admin/Admin.iml" />
-      <module fileurl="file://$PROJECT_DIR$/Chauffeur/Chauffeur.iml" filepath="$PROJECT_DIR$/Chauffeur/Chauffeur.iml" />
-      <module fileurl="file://$PROJECT_DIR$/Eureka_server/Eureka_server.iml" filepath="$PROJECT_DIR$/Eureka_server/Eureka_server.iml" />
-      <module fileurl="file://$PROJECT_DIR$/Locataire/Locataire.iml" filepath="$PROJECT_DIR$/Locataire/Locataire.iml" />
-      <module fileurl="file://$PROJECT_DIR$/Mission/Mission.iml" filepath="$PROJECT_DIR$/Mission/Mission.iml" />
-      <module fileurl="file://$PROJECT_DIR$/Vehicule/Vehicule.iml" filepath="$PROJECT_DIR$/Vehicule/Vehicule.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/microservices.iml" filepath="$PROJECT_DIR$/.idea/microservices.iml" />
     </modules>
   </component>
