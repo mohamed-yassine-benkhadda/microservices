@@ -1,4 +1,4 @@
-package com.microservices.admin;
+package com.example.admin;
 
 import jakarta.persistence.*;
 

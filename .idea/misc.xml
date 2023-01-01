@@ -2,6 +2,8 @@
 <project version="4">
   <component name="ExternalStorageConfigurationManager" enabled="true" />
   <component name="FrameworkDetectionExcludesConfiguration">
+    <file type="web" url="file://$PROJECT_DIR$/Admin" />
+    <file type="web" url="file://$PROJECT_DIR$/Administrateur" />
     <file type="web" url="file://$PROJECT_DIR$/Recherche" />
   </component>
   <component name="MavenProjectsManager">

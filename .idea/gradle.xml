@@ -1,13 +1,32 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="GradleMigrationSettings" migrationVersion="1" />
   <component name="GradleSettings">
     <option name="linkedExternalProjectsSettings">
+      <GradleProjectSettings>
+        <option name="distributionType" value="DEFAULT_WRAPPED" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$/Administrateur" />
+        <option name="modules">
+          <set>
+            <option value="$PROJECT_DIR$/Administrateur" />
+          </set>
+        </option>
+      </GradleProjectSettings>
+      <GradleProjectSettings>
+        <option name="distributionType" value="DEFAULT_WRAPPED" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$/administrateur" />
+        <option name="modules">
+          <set>
+            <option value="$PROJECT_DIR$/administrateur" />
+          </set>
+        </option>
+      </GradleProjectSettings>
       <GradleProjectSettings>
         <option name="distributionType" value="DEFAULT_WRAPPED" />
         <option name="externalProjectPath" value="$PROJECT_DIR$/recherche" />
         <option name="modules">
           <set>
-            <option value="$PROJECT_DIR$/recherche" />
+            <option value="$PROJECT_DIR$/Recherche" />
           </set>
         </option>
       </GradleProjectSettings>

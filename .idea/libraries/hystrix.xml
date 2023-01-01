@@ -1,5 +1,5 @@
 <component name="libraryTable">
-  <library name="jpa">
+  <library name="hystrix">
     <CLASSES>
       <root url="jar://$MAVEN_REPOSITORY$/org/springframework/data/spring-data-jpa/3.0.0/spring-data-jpa-3.0.0.jar!/" />
     </CLASSES>

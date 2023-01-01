@@ -10,12 +10,13 @@
         <module name="Recherche_microservices" />
         <module name="Eureka_server" />
         <module name="Mission" />
-        <module name="Admin" />
         <module name="Locataire" />
+        <module name="Admin" />
         <module name="Chauffeur" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
+      <module name="Administrateur" target="17" />
       <module name="Recherche" target="17" />
     </bytecodeTargetLevel>
   </component>
