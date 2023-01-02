@@ -13,10 +13,12 @@
         <module name="Locataire" />
         <module name="Admin" />
         <module name="Chauffeur" />
+        <module name="recherche" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
       <module name="Administrateur" target="17" />
+      <module name="recherche" target="1.5" />
       <module name="Recherche" target="17" />
     </bytecodeTargetLevel>
   </component>

@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.*;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+//import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
@@ -15,13 +16,13 @@ import java.util.Arrays;
 import java.util.List;
 
 @RestController
-@RequestMapping("/recherche")
 public class GestionRecherche {
 //    @Autowired
 //    RechercheRespository rechercheRespository;
     @Autowired
     private EurekaClient discoveryClient;
-    @GetMapping("")
+    @GetMapping("/")
+//    @CircuitBreaker(name = "recherche", fallbackMethod = "rechercheFallBack")
     public Recherche getRecherche(@RequestParam("text") String text){
         Recherche r = new Recherche();
         r.setChauffeur(rechercheChauffeur(text));
@@ -37,7 +38,7 @@ public class GestionRecherche {
         headers.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
         HttpEntity<String> entity = new HttpEntity<String>(headers);
         List<InstanceInfo> apps = discoveryClient.getApplication("CHAUFFEUR").getInstances();
-        String url_chauffeur = "http://"+apps.get(0).getHostName()+":"+apps.get(0).getPort()+"/"+apps.get(0).getAppName().toLowerCase();
+        String url_chauffeur = "http://"+apps.get(0).getHostName()+":"+apps.get(0).getPort();
         Chauffeur[] result_chauffeur = restTemplate.getForObject(url_chauffeur, Chauffeur[].class);
         List<Chauffeur> liste_chauffeur = new ArrayList<Chauffeur>();
         for(Chauffeur c:Arrays.stream(result_chauffeur).toList()){
@@ -66,7 +67,7 @@ public class GestionRecherche {
         headers.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
         HttpEntity<String> entity = new HttpEntity<String>(headers);
         List<InstanceInfo> apps = discoveryClient.getApplication("ADMIN").getInstances();
-        String url_admin = "http://"+apps.get(0).getHostName()+":"+apps.get(0).getPort()+"/"+apps.get(0).getAppName().toLowerCase();
+        String url_admin = "http://"+apps.get(0).getHostName()+":"+apps.get(0).getPort();
         Admin[] result_admin = restTemplate.getForObject(url_admin, Admin[].class);
         List<Admin> liste_admin = new ArrayList<Admin>();
         for(Admin a:Arrays.stream(result_admin).toList()){
@@ -95,7 +96,7 @@ public class GestionRecherche {
         headers.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
         HttpEntity<String> entity = new HttpEntity<String>(headers);
         List<InstanceInfo> apps = discoveryClient.getApplication("MISSION").getInstances();
-        String url_mission = "http://"+apps.get(0).getHostName()+":"+apps.get(0).getPort()+"/"+apps.get(0).getAppName().toLowerCase();
+        String url_mission = "http://"+apps.get(0).getHostName()+":"+apps.get(0).getPort();
         Mission[] result_mission = restTemplate.getForObject(url_mission, Mission[].class);
         List<Mission> liste_mission = new ArrayList<Mission>();
         for(Mission m:Arrays.stream(result_mission).toList()){
@@ -118,7 +119,7 @@ public class GestionRecherche {
         headers.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
         HttpEntity<String> entity = new HttpEntity<String>(headers);
         List<InstanceInfo> apps = discoveryClient.getApplication("LOCATAIRE").getInstances();
-        String url_locataire = "http://"+apps.get(0).getHostName()+":"+apps.get(0).getPort()+"/"+apps.get(0).getAppName().toLowerCase();
+        String url_locataire = "http://"+apps.get(0).getHostName()+":"+apps.get(0).getPort();
         Locataire[] result_locataire = restTemplate.getForObject(url_locataire, Locataire[].class);
         List<Locataire> liste_locataire = new ArrayList<Locataire>();
         for(Locataire l:Arrays.stream(result_locataire).toList()){
@@ -138,7 +139,7 @@ public class GestionRecherche {
         headers.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
         HttpEntity<String> entity = new HttpEntity<String>(headers);
         List<InstanceInfo> apps = discoveryClient.getApplication("VEHICULE").getInstances();
-        String url_vehicule = "http://"+apps.get(0).getHostName()+":"+apps.get(0).getPort()+"/"+apps.get(0).getAppName().toLowerCase();
+        String url_vehicule = "http://"+apps.get(0).getHostName()+":"+apps.get(0).getPort();
         Vehicule[] result_vehicule = restTemplate.getForObject(url_vehicule, Vehicule[].class);
         List<Vehicule> liste_vehicule = new ArrayList<Vehicule>();
         for(Vehicule v:Arrays.stream(result_vehicule).toList()){

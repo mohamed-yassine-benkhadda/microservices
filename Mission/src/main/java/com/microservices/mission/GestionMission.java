@@ -2,6 +2,7 @@ package com.microservices.mission;
 
 import com.netflix.appinfo.InstanceInfo;
 import com.netflix.discovery.EurekaClient;
+import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.*;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,26 +17,28 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/mission")
 public class GestionMission {
 
     @Autowired
     MissionRespository missionRespository;
     @Autowired
     private EurekaClient discoveryClient;
-    @GetMapping("ajouter")
+    @GetMapping("/ajouter")
+    @CircuitBreaker(name = "mission", fallbackMethod = "ajouterFallBack")
     public Mission addMission(@RequestParam("idChauffeur") int idChauffeur, @RequestParam("idVehicule") int idVehicule, @RequestParam("adresse") String adresse, @RequestParam("dateDebut") String dateDebut, @RequestParam("dateFin") String dateFin, @RequestParam("titre") String titre, @RequestParam("description") String description){
         Mission m = new Mission(idChauffeur,idVehicule, adresse, dateDebut, dateFin, titre, description);
         missionRespository.save(m);
         return m;
     }
 
-    @GetMapping("supprimer")
+    @GetMapping("/supprimer")
+    @CircuitBreaker(name = "mission", fallbackMethod = "supprimerFallBack")
     public void deleteMission(@RequestParam("id") int id){
         missionRespository.deleteById(id);
     }
 
-    @GetMapping("")
+    @GetMapping("/")
+    @CircuitBreaker(name = "mission", fallbackMethod = "allFallBack")
     public List<ListeMission> listMission(){
         List<Mission> listeMission;
         RestTemplate restTemplate = new RestTemplate();
@@ -47,9 +50,10 @@ public class GestionMission {
         ListeMission mission = new ListeMission();
         for (Mission m:listeMission) {
             List<InstanceInfo> apps = discoveryClient.getApplication("VEHICULE").getInstances();
-            String url_vehicule = "http://"+apps.get(0).getHostName()+":"+apps.get(0).getPort()+"/"+apps.get(0).getAppName().toLowerCase()+"/page?id="+m.getId_vehicule();
+            String url_vehicule = "http://"+apps.get(0).getHostName()+":"+apps.get(0).getPort()+"/page?id="+m.getId_vehicule();
+            System.out.println(url_vehicule);
             apps = discoveryClient.getApplication("CHAUFFEUR").getInstances();
-            String url_chauffeur = "http://"+apps.get(0).getHostName()+":"+apps.get(0).getPort()+"/"+apps.get(0).getAppName().toLowerCase()+"/page?id="+m.getId_chauffeur();
+            String url_chauffeur = "http://"+apps.get(0).getHostName()+":"+apps.get(0).getPort()+"/page?id="+m.getId_chauffeur();
             ResponseEntity<Chauffeur> result_chauffeur = restTemplate.exchange(url_chauffeur, HttpMethod.GET, entity, Chauffeur.class);
             ResponseEntity<ListeVehicule> result_vehicule = restTemplate.exchange(url_vehicule, HttpMethod.GET, entity, ListeVehicule.class);
             mission.setId_mission(m.getId_mission());
@@ -70,7 +74,8 @@ public class GestionMission {
         return liste;
     }
 
-    @GetMapping("page")
+    @GetMapping("/page")
+    @CircuitBreaker(name = "mission", fallbackMethod = "pageFallBack")
     public ListeMission getMission(@RequestParam("id") int id){
         RestTemplate restTemplate = new RestTemplate();
         HttpHeaders headers = new HttpHeaders();
@@ -80,9 +85,9 @@ public class GestionMission {
         missionRespository.findById(id).ifPresent(m -> {
             List<InstanceInfo> apps = discoveryClient.getApplication("VEHICULE").getInstances();
             System.out.println(m.getClass());
-            String url_vehicule = "http://"+apps.get(0).getHostName()+":"+apps.get(0).getPort()+"/"+apps.get(0).getAppName().toLowerCase()+"/page?id="+m.getId_vehicule();
+            String url_vehicule = "http://"+apps.get(0).getHostName()+":"+apps.get(0).getPort()+"/page?id="+m.getId_vehicule();
             apps = discoveryClient.getApplication("CHAUFFEUR").getInstances();
-            String url_chauffeur = "http://"+apps.get(0).getHostName()+":"+apps.get(0).getPort()+"/"+apps.get(0).getAppName().toLowerCase()+"/page?id="+m.getId_chauffeur();
+            String url_chauffeur = "http://"+apps.get(0).getHostName()+":"+apps.get(0).getPort()+"/page?id="+m.getId_chauffeur();
             ResponseEntity<Chauffeur> result_chauffeur = restTemplate.exchange(url_chauffeur, HttpMethod.GET, entity, Chauffeur.class);
             ResponseEntity<ListeVehicule> result_vehicule = restTemplate.exchange(url_vehicule, HttpMethod.GET, entity, ListeVehicule.class);
             mission.setId_mission(m.getId_mission());
@@ -100,5 +105,24 @@ public class GestionMission {
             mission.setDescription(m.getDescription());
         });
         return mission;
+    }
+
+    public Mission ajouterFallBack(Exception e){
+        System.out.println("redirected due to an issue");
+        return null;
+    }
+
+    public void supprimerFallBack(Exception e){
+        System.out.println("redirected due to an issue");
+    }
+
+    public List<ListeMission> AllFallBack(Exception e){
+        System.out.println("redirected due to an issue");
+        return null;
+    }
+
+    public ListeMission pageFallBack(Exception e){
+        System.out.println("redirected due to an issue");
+        return null;
     }
 }
