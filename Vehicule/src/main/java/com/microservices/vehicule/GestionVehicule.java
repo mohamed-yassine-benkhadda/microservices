@@ -2,6 +2,7 @@ package com.microservices.vehicule;
 
 import com.netflix.appinfo.InstanceInfo;
 import com.netflix.discovery.EurekaClient;
+import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.*;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -25,6 +26,7 @@ public class GestionVehicule {
     private RestTemplate restTemplate;
 
     @GetMapping("/ajouter")
+    @CircuitBreaker(name = "vehicule", fallbackMethod = "ajouterFallBack")
     public Vehicule addVehicule(@RequestParam("id_locataire") int id_locataire, @RequestParam("immatricule") String immatricule, @RequestParam("marque") String marque, @RequestParam("model") String model, @RequestParam("categorie") String categorie, @RequestParam("permis") String permis){
         Vehicule v= new Vehicule(id_locataire,immatricule,marque,model,categorie,permis);
         vehiculeRespository.save(v);
@@ -32,11 +34,13 @@ public class GestionVehicule {
     }
 
     @GetMapping("/supprimer")
+    @CircuitBreaker(name = "vehicule", fallbackMethod = "supprimerFallBack")
     public void deleteVehicule(@RequestParam("id") int id){
         vehiculeRespository.deleteById(id);
     }
 
     @GetMapping("/")
+    @CircuitBreaker(name = "vehicule", fallbackMethod = "allFallBack")
     public List<ListeVehicule> allVehicule(){
         List<Vehicule> listeVehicule;
         restTemplate = new RestTemplate();
@@ -84,5 +88,19 @@ public class GestionVehicule {
             vehicule.setCategorie(v.getCategorie());
         });
         return vehicule;
+    }
+
+    public Vehicule ajouterFallBack(Exception e){
+        System.out.println("redirected due to an issue");
+        return null;
+    }
+
+    public void supprimerFallBack(Exception e){
+        System.out.println("redirected due to an issue");
+    }
+
+    public List<Vehicule> allFallBack(Exception e){
+        System.out.println("redirected due to an issue");
+        return null;
     }
 }

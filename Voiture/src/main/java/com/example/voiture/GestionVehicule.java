@@ -14,7 +14,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-@RestController
+@ 
 public class GestionVehicule {
     @Autowired
     VehiculeRespository vehiculeRespository;
