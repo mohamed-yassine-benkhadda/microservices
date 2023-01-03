@@ -34,7 +34,7 @@ public class GestionVehicule {
     }
 
     @GetMapping("/supprimer")
-    @CircuitBreaker(name = "vehicule", fallbackMethod = "supprimerFallBack")
+    @CircuitBreaker(name = "vehicule", fallbackMethod = "supprimeFallBack")
     public void deleteVehicule(@RequestParam("id") int id){
         vehiculeRespository.deleteById(id);
     }
@@ -95,8 +95,9 @@ public class GestionVehicule {
         return null;
     }
 
-    public void supprimerFallBack(Exception e){
+    public void supprimeFallBack(Exception e){
         System.out.println("redirected due to an issue");
+        System.out.println(e);
     }
 
     public List<Vehicule> allFallBack(Exception e){
