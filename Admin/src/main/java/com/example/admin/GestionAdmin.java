@@ -19,7 +19,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-//@CircuitBreaker(name = "admin", fallbackMethod = "adminMethod")
+@CircuitBreaker(name = "admin", fallbackMethod = "adminMethod")
 public class GestionAdmin {
     @Autowired
     AdminRespository adminRespository;
@@ -53,18 +53,6 @@ public class GestionAdmin {
             System.out.println(c);
         }
         return listeAdmin;
-    }
-
-    @CircuitBreaker(name = "admin", fallbackMethod = "adminTestFallBack")
-    @GetMapping("/test")
-    public ResponseEntity<String> testVehicule(){
-        List<InstanceInfo> apps = discoveryClient.getApplication("VEHICULE").getInstances();
-        String url = "http://"+apps.get(0).getHostName()+":"+apps.get(0).getPort()+"/"+apps.get(0).getAppName().toLowerCase();
-        HttpHeaders headers = new HttpHeaders();
-        headers.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
-        HttpEntity <String> entity = new HttpEntity<String>(headers);
-        ResponseEntity<String> result = restTemplate.exchange(url, HttpMethod.GET, entity, String.class);
-        return result;
     }
 
     public ResponseEntity<String> adminTestFallBack(Exception e){

@@ -1,0 +1,31 @@
+version: '3.3'
+services:
+  mysql:
+    image: mysql:latest
+    environment:
+      MYSQL_DATABASE: admin
+      MYSQL_ALLOW_EMPTY_PASSWORD=: true
+    ports:
+      - "3306"
+  admin:
+    build: .
+    depends_on:
+      - mysql
+      - eureka
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/admin
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD:
+      EUREKA_SERVICE_URL: http://eureka:8761 // This overrides your Spring Property
+      EUREKA_INSTANCE_PREFER_IP_ADDRESS: true
+      LOGGING_FILE: /tmp/admin.log
+    ports:
+      - "8087"
+
+  eureka:
+    image: springcloud/eureka
+    container_name: eureka
+    ports:
+      - "8761"
+    environment:
+      EUREKA_INSTANCE_PREFERIPADDRESS: true
