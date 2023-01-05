@@ -13,6 +13,7 @@
         <module name="Locataire" />
         <module name="Admin" />
         <module name="Chauffeur" />
+        <module name="Vehicule (1)" />
         <module name="recherche" />
       </profile>
     </annotationProcessing>
@@ -20,18 +21,20 @@
       <module name="Administrateur" target="17" />
       <module name="recherche" target="1.5" />
       <module name="Recherche" target="17" />
+      <module name="Vehicule (1)" target="17" />
       <module name="Voiture" target="17" />
     </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
       <module name="Admin" options="-parameters" />
-      <module name="Chauffeur" options="-parameters" />
-      <module name="Eureka_server" options="-parameters" />
-      <module name="Locataire" options="-parameters" />
-      <module name="Mission" options="-parameters" />
-      <module name="Recherche_microservices" options="-parameters" />
-      <module name="Vehicule" options="-parameters" />
+      <module name="Chauffeur" options="" />
+      <module name="Eureka_server" options="" />
+      <module name="Locataire" options="" />
+      <module name="Mission" options="" />
+      <module name="Recherche_microservices" options="" />
+      <module name="Vehicule" options="" />
+      <module name="Vehicule (1)" options="-parameters" />
       <module name="Voiture" options="-parameters" />
     </option>
   </component>
