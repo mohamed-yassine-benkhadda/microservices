@@ -1,0 +1,12 @@
+version: '3.5'
+services:
+
+  discovery-server:
+    build:
+      context: .
+
+    environment:
+      - SPRING_APPLICATION_NAME=discovery-server
+      - SPRING_PROFILES_ACTIVE=dev
+    expose:
+      - "8761"
