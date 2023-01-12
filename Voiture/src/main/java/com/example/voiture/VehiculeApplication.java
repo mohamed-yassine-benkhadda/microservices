@@ -1,4 +1,4 @@
-package com.microservices.vehicule;
+package com.example.voiture;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

@@ -6,7 +6,6 @@ import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.*;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
@@ -14,7 +13,6 @@ import org.springframework.web.client.RestTemplate;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 public class GestionMission {
@@ -40,6 +38,15 @@ public class GestionMission {
     @GetMapping("/")
     @CircuitBreaker(name = "mission", fallbackMethod = "allFallBack")
     public List<ListeMission> listMission(){
+        System.out.println("===================================================");
+        System.out.println("===================================================");
+        System.out.println("===================================================");
+        System.out.println("===================================================");
+        System.out.println("===================================================");
+        System.out.println("===================================================");
+        System.out.println("===================================================");
+        System.out.println("===================================================");
+        System.out.println("===================================================");
         List<Mission> listeMission;
         RestTemplate restTemplate = new RestTemplate();
         HttpHeaders headers = new HttpHeaders();
@@ -49,6 +56,7 @@ public class GestionMission {
         List<ListeMission> liste= new ArrayList<ListeMission>();
         ListeMission mission = new ListeMission();
         for (Mission m:listeMission) {
+            System.out.println(m);
             List<InstanceInfo> apps = discoveryClient.getApplication("VEHICULE").getInstances();
             String url_vehicule = "http://"+apps.get(0).getHostName()+":"+apps.get(0).getPort()+"/page?id="+m.getId_vehicule();
             System.out.println(url_vehicule);
@@ -56,6 +64,7 @@ public class GestionMission {
             String url_chauffeur = "http://"+apps.get(0).getHostName()+":"+apps.get(0).getPort()+"/page?id="+m.getId_chauffeur();
             ResponseEntity<Chauffeur> result_chauffeur = restTemplate.exchange(url_chauffeur, HttpMethod.GET, entity, Chauffeur.class);
             ResponseEntity<ListeVehicule> result_vehicule = restTemplate.exchange(url_vehicule, HttpMethod.GET, entity, ListeVehicule.class);
+
             mission.setId_mission(m.getId_mission());
             mission.setAdresse(m.getAdresse());
             mission.setLocataire(result_vehicule.getBody().getLocataire());

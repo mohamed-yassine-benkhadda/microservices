@@ -10,12 +10,12 @@
     <option name="originalFiles">
       <list>
         <option value="$PROJECT_DIR$/Admin/pom.xml" />
-        <option value="$PROJECT_DIR$/Vehicule/pom.xml" />
         <option value="$PROJECT_DIR$/Chauffeur/pom.xml" />
         <option value="$PROJECT_DIR$/Eureka_server/pom.xml" />
         <option value="$PROJECT_DIR$/Mission/pom.xml" />
         <option value="$PROJECT_DIR$/Locataire/pom.xml" />
         <option value="$PROJECT_DIR$/Recherche_microservices/pom.xml" />
+        <option value="$PROJECT_DIR$/Voiture/pom.xml" />
       </list>
     </option>
   </component>

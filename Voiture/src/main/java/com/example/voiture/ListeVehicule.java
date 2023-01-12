@@ -1,4 +1,4 @@
-package com.microservices.vehicule;
+package com.example.voiture;
 
 public class ListeVehicule {
     private int id_vehicule;

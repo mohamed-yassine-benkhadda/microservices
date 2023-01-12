@@ -10,11 +10,9 @@ services:
       - network
     environment:
       MYSQL_ALLOW_EMPTY_PASSWORD: true
+      MYSQL_PORT: 3300
       SPRING_DATASOURCE_URL: "jdbc:mysql://mysqldb:3306/admin"
-#      MYSQL_ROOT_PASSWORD: root
-#      MYSQL_USER: root
-#      MYSQL_PASSWORD: root
-      #      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: "http://eureka:8761/"
+#      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: "http://eureka:8761/"
       eureka.client.serviceUrl.defaultZone: "http://eureka:8761/eureka/"
 
 

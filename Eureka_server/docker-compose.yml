@@ -1,12 +1,13 @@
-version: '3.5'
+version: '2'
+
 services:
 
-  discovery-server:
-    build:
-      context: .
+  eureka:
+    build: .
+    ports:
+      - "8761:8761"
+    networks:
+      - network
 
-    environment:
-      - SPRING_APPLICATION_NAME=discovery-server
-      - SPRING_PROFILES_ACTIVE=dev
-    expose:
-      - "8761"
+networks:
+  network:

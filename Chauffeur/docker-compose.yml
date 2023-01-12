@@ -1,31 +1,22 @@
-version: '3.3'
+version: '2'
+
 services:
-  mysql:
-    image: mysql:latest
-    environment:
-      MYSQL_DATABASE: chauffeur
-      MYSQL_ALLOW_EMPTY_PASSWORD=: true
-    ports:
-      - "3306"
+
   chauffeur:
     build: .
-    depends_on:
-      - mysql
-      - eureka
-    environment:
-      SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/chauffeur
-      SPRING_DATASOURCE_USERNAME: root
-      SPRING_DATASOURCE_PASSWORD:
-      EUREKA_SERVICE_URL: http://eureka:8761
-      EUREKA_INSTANCE_PREFER_IP_ADDRESS: true
-      LOGGING_FILE: /tmp/admin.log
     ports:
-      - "8087:8087"
+      - "8085:8085"
+    networks:
+      - network
+    environment:
+      MYSQL_ALLOW_EMPTY_PASSWORD: true
+      SPRING_DATASOURCE_URL: "jdbc:mysql://mysqldb:3306/chauffeur"
+#      MYSQL_ROOT_PASSWORD: root
+#      MYSQL_USER: root
+#      MYSQL_PASSWORD: root
+      #      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: "http://eureka:8761/"
+      eureka.client.serviceUrl.defaultZone: "http://eureka:8761/eureka/"
 
-  eureka:
-    image: springcloud/eureka
-    container_name: eureka
-    ports:
-      - "8761:8761"
-    environment:
-      EUREKA_INSTANCE_PREFERIPADDRESS: true
+
+networks:
+  network:

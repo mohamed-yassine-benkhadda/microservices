@@ -1,0 +1,19 @@
+version: '2'
+
+services:
+
+  locataire:
+    build: .
+    ports:
+      - "8089:8089"
+    networks:
+      - network
+    environment:
+      MYSQL_ALLOW_EMPTY_PASSWORD: true
+      SPRING_DATASOURCE_URL: "jdbc:mysql://mysqldb:3306/locataire"
+#      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: "http://eureka:8761/"
+      eureka.client.serviceUrl.defaultZone: "http://eureka:8761/eureka/"
+
+
+networks:
+  network:
