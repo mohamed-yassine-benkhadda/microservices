@@ -56,12 +56,12 @@ public class GestionMission {
         List<ListeMission> liste= new ArrayList<ListeMission>();
         ListeMission mission = new ListeMission();
         for (Mission m:listeMission) {
-            System.out.println(m);
+            System.out.println(discoveryClient.getApplications().getRegisteredApplications().isEmpty());
             List<InstanceInfo> apps = discoveryClient.getApplication("VEHICULE").getInstances();
-            String url_vehicule = "http://"+apps.get(0).getHostName()+":"+apps.get(0).getPort()+"/page?id="+m.getId_vehicule();
+            String url_vehicule = "http://host.docker.internal:"+apps.get(0).getPort()+"/page?id="+m.getId_vehicule();
             System.out.println(url_vehicule);
             apps = discoveryClient.getApplication("CHAUFFEUR").getInstances();
-            String url_chauffeur = "http://"+apps.get(0).getHostName()+":"+apps.get(0).getPort()+"/page?id="+m.getId_chauffeur();
+            String url_chauffeur = "http://host.docker.internal:"+apps.get(0).getPort()+"/page?id="+m.getId_chauffeur();
             ResponseEntity<Chauffeur> result_chauffeur = restTemplate.exchange(url_chauffeur, HttpMethod.GET, entity, Chauffeur.class);
             ResponseEntity<ListeVehicule> result_vehicule = restTemplate.exchange(url_vehicule, HttpMethod.GET, entity, ListeVehicule.class);
 

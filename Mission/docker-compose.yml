@@ -2,17 +2,17 @@ version: '2'
 
 services:
 
-  admin:
+  mission:
     build: .
     ports:
-      - "8087:8087"
+      - "8088:8088"
     networks:
       - network
     environment:
       MYSQL_ALLOW_EMPTY_PASSWORD: true
       MYSQL_PORT: 3300
-      SPRING_DATASOURCE_URL: "jdbc:mysql://mysqldb:3306/admin"
-#      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: "http://eureka:8761/"
+      SPRING_DATASOURCE_URL: "jdbc:mysql://mysqldb:3306/mission"
+      #      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: "http://eureka:8761/"
       eureka.client.serviceUrl.defaultZone: "http://eureka:8761/eureka/"
 
 
