@@ -1,0 +1,85 @@
+version: '3.8'
+services:
+  eureka:
+    container_name: eureka
+    build: Eureka_server/
+    ports:
+      - 8761:8761
+    networks:
+      - network
+  admin:
+    container_name: admin
+    build: Admin/
+    ports:
+      - "8087:8087"
+    depends_on:
+      - eureka
+    networks:
+      - network
+    environment:
+      MYSQL_ALLOW_EMPTY_PASSWORD: true
+      SPRING_DATASOURCE_URL: "jdbc:mysql://mysqldb:3306/admin"
+      eureka.client.serviceUrl.defaultZone: "http://eureka:8761/eureka/"
+
+  chauffeur:
+    container_name: chauffeur
+    build: Chauffeur/
+    ports:
+      - "8085:8085"
+    networks:
+      - network
+    depends_on:
+      - eureka
+    environment:
+      MYSQL_ALLOW_EMPTY_PASSWORD: true
+      SPRING_DATASOURCE_URL: "jdbc:mysql://mysqldb:3306/chauffeur"
+      eureka.client.serviceUrl.defaultZone: "http://eureka:8761/eureka/"
+
+  locataire:
+    container_name: locataire
+    build: Locataire/
+    ports:
+      - "8089:8089"
+    depends_on:
+      - eureka
+    networks:
+      - network
+    environment:
+      MYSQL_ALLOW_EMPTY_PASSWORD: true
+      SPRING_DATASOURCE_URL: "jdbc:mysql://mysqldb:3306/locataire"
+      eureka.client.serviceUrl.defaultZone: "http://eureka:8761/eureka/"
+
+  mission:
+    container_name: mission
+    build: Mission/
+    ports:
+      - "8088:8088"
+    depends_on:
+      - locataire
+      - chauffeur
+      - vehicule
+      - eureka
+    networks:
+      - network
+    environment:
+      MYSQL_ALLOW_EMPTY_PASSWORD: true
+      SPRING_DATASOURCE_URL: "jdbc:mysql://mysqldb:3306/mission"
+      eureka.client.serviceUrl.defaultZone: "http://eureka:8761/eureka/"
+
+  vehicule:
+    container_name: vehicule
+    build: Voiture/
+    ports:
+      - "8083:8083"
+    depends_on:
+      - locataire
+      - eureka
+    networks:
+      - network
+    environment:
+      MYSQL_ALLOW_EMPTY_PASSWORD: true
+      SPRING_DATASOURCE_URL: "jdbc:mysql://mysqldb:3306/vehicule"
+      eureka.client.serviceUrl.defaultZone: "http://eureka:8761/eureka/"
+
+networks:
+  network:

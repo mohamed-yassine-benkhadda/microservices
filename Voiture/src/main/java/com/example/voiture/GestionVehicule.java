@@ -64,10 +64,9 @@ public class GestionVehicule {
         System.out.println("***********************************");
         for (Vehicule v:listeVehicule) {
             List<InstanceInfo> apps = discoveryClient.getApplication("LOCATAIRE").getInstances();
-            String url_locataire = "http://host.docker.internal:"+apps.get(0).getPort()+"/page?id="+v.getId_vehicule();
+            String url_locataire = "http://host.docker.internal:"+apps.get(0).getPort()+"/page?id="+v.getId_locataire();
             System.out.println(url_locataire);
             ResponseEntity<Locataire> result_locataire = restTemplate.exchange(url_locataire, HttpMethod.GET, entity, Locataire.class);
-            System.out.println(result_locataire.getStatusCode());
             vehicule.setId_vehicule(v.getId_vehicule());
             vehicule.setLocataire(result_locataire.getBody().getNom());
             vehicule.setImmatricule(v.getImmatricule());
@@ -90,7 +89,7 @@ public class GestionVehicule {
         ListeVehicule vehicule = new ListeVehicule();
         vehiculeRespository.findById(id).ifPresent(v -> {
             List<InstanceInfo> apps = discoveryClient.getApplication("LOCATAIRE").getInstances();
-            String url_locataire = "http://host.docker.internal:"+apps.get(0).getPort()+"/page?id="+v.getId_vehicule();
+            String url_locataire = "http://host.docker.internal:"+apps.get(0).getPort()+"/page?id="+v.getId_locataire();
             ResponseEntity<Locataire> result_locataire = restTemplate.exchange(url_locataire, HttpMethod.GET, entity, Locataire.class);
             vehicule.setId_vehicule(v.getId_vehicule());
             vehicule.setLocataire(result_locataire.getBody().getNom());
